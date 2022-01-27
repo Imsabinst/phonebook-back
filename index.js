@@ -1,6 +1,5 @@
 const express = require("express");
 const app = express();
-/**3.1 Phone directory backend, part 1 */
 let persons = [
   {
     name: "Arto Hellas",
@@ -31,7 +30,11 @@ app.get("/", (req, res) => {
 app.get("/persons/:id", (request, response) => {
   const id = Number(request.params.id);
   const person = persons.find((person) => person.id === id);
-  response.json(person);
+  if (person) {
+    response.json(person);
+  } else {
+    response.status(404).end();
+  }
 });
 const PORT = 3001;
 app.listen(PORT, () => {
