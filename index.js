@@ -1,7 +1,11 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
+const cors = require("cors");
+
 app.use(bodyParser.json());
+app.use(cors());
+
 let persons = [
   {
     name: "Arto Hellas",
@@ -46,6 +50,7 @@ app.get("/api/persons/:id", (request, response) => {
     response.status(404).end();
   }
 });
+
 /**Delete single phone directory */
 app.delete("/api/persons/:id", (request, response) => {
   const id = Number(request.params.id);
@@ -67,6 +72,7 @@ const generateId = () => {
 /** Add new phone directory entry can be added with a HTTP POST request  */
 app.post("/api/persons", (request, response) => {
   const body = request.body;
+  console.log(body);
 
   /**Checks if name is missing */
   if (!body.name) {
@@ -96,6 +102,21 @@ app.post("/api/persons", (request, response) => {
   persons = persons.concat(person);
   response.json(persons);
 });
+
+const logger = (request, response, next) => {
+  console.log("Method:", request.method);
+  console.log("Path:  ", request.path);
+  console.log("Body:  ", request.body);
+  console.log("checking");
+  next();
+};
+app.use(logger);
+
+const error = (request, response) => {
+  response.status(404).send({ error: "unknown endpoint" });
+};
+
+app.use(error);
 
 const PORT = 3001;
 app.listen(PORT, () => {
