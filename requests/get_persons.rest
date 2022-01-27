@@ -1,0 +1,7 @@
+
+
+// returns response of persons array
+//GET http://localhost:3001/persons
+
+//returns response of single person whose id is 1
+GET http://localhost:3001/persons/1
