@@ -2,5 +2,7 @@ POST http://localhost:3001/api/persons
 Content-Type: application/json
 
 {
-    "name":"Pragya St","number":"040-123456","id":4
+  "name":"sabin st",
+  "number": "040-423456",
+  "id": 5
 }

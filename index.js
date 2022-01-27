@@ -53,9 +53,7 @@ app.delete("/api/persons/:id", (request, response) => {
   response.status(204).end();
 });
 
-/** Add new phone directory entry can be added with a HTTP POST request  */
-app.post("/api/persons", (request, response) => {
-  //const maxId = persons[Math.floor(Math.random() * persons.length)];
+const generateId = () => {
   const maxId =
     persons.length > 0
       ? persons
@@ -63,10 +61,39 @@ app.post("/api/persons", (request, response) => {
           .sort((a, b) => a - b)
           .reverse()[0]
       : 1;
-  const person = request.body;
-  person.id = maxId + 1;
-  persons = persons.concat(person);
+  return maxId + 1;
+};
 
+/** Add new phone directory entry can be added with a HTTP POST request  */
+app.post("/api/persons", (request, response) => {
+  const body = request.body;
+
+  /**Checks if name is missing */
+  if (!body.name) {
+    return response.status(400).json({
+      error: "name missing",
+    });
+  }
+  /*Checks if number is missing*/
+  if (!body.number) {
+    return response.status(400).json({
+      error: "number missing",
+    });
+  }
+  /**Checks if name is unique */
+  if (persons.some((person) => person.name === body.name)) {
+    console.log("name must be unique");
+    return response.status(400).json({
+      error: "name must be unique",
+    });
+  }
+
+  const person = {
+    name: body.name,
+    number: body.number,
+    id: generateId(),
+  };
+  persons = persons.concat(person);
   response.json(persons);
 });
 
