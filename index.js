@@ -27,11 +27,12 @@ let persons = [
 app.get("/", (req, res) => {
   res.send("<h1>Hello World!</h1>");
 });
-
-app.get("/persons", (req, res) => {
-  res.json(persons);
+/**3.2 Phone directory backend, part 2:returns a single phone directory entry */
+app.get("/persons/:id", (request, response) => {
+  const id = Number(request.params.id);
+  const person = persons.find((person) => person.id === id);
+  response.json(person);
 });
-
 const PORT = 3001;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
