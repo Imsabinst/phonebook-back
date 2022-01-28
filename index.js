@@ -32,7 +32,9 @@ let persons = [
 /**Returns Hello world in http://localhost:3001 */
 
 app.get("/", (req, res) => {
-  res.send("<h1>Hello World!</h1>");
+  res.send(
+    "<h1>Hello World!</h1><br /><p>Please, add '/api/persons' to get the list</p>"
+  );
 });
 
 /**Returns persons array http://localhost:3001/persons */
