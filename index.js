@@ -40,7 +40,7 @@ app.get("/", (req, res) => {
 
 /**Returns persons array http://localhost:3001/persons */
 app.get("/api/persons", (req, res) => {
-  res.send(persons);
+  res.json(persons);
 });
 
 /**3.2 Phone directory backend, part 2:returns a single phone directory entry */
