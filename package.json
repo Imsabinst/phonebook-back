@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^14.3.2",
     "express": "^4.16.2"
   },
   "devDependencies": {

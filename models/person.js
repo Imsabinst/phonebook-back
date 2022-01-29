@@ -1,7 +1,10 @@
 const mongoose = require("mongoose");
 
-const url =
-  "mongodb+srv://fullstack:fullStack2021sbn@cluster0.u0qxb.mongodb.net/fullstack-phonebook";
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
+const url = process.env.MONGODB_URI;
+
 mongoose.connect(url);
 
 const Person = mongoose.model("persons", {
