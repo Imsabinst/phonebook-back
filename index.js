@@ -24,6 +24,12 @@ const formatDetails = (person) => {
   return formattedDetails;
 };
 
+app.get("/", (req, res) => {
+  res.send(
+    "<h1>Hello World!</h1><br /><p>Please, add '/api/persons' to get the list</p>"
+  );
+});
+/**Gets the list of persons */
 app.get("/api/persons", (request, response) => {
   Person.find({}, { __v: 0 }).then((persons) => {
     response.json(persons.map(formatDetails));
