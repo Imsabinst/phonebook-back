@@ -6,6 +6,7 @@ const cors = require("cors");
 app.use(bodyParser.json());
 app.use(cors());
 const Person = require("./models/person");
+const { request, response } = require("express");
 
 const logger = (request, response, next) => {
   console.log("Method:", request.method);
@@ -53,10 +54,35 @@ app.post("/api/persons", (request, response) => {
     response.json(formatDetails(saveDetails));
   });
 });
-app.delete("/api/persons/:id", (request, response) => {
+/* app.delete("/api/persons/:id", (request, response) => {
   Person.findById(request.params.id).then((person) =>
     response.json(person["_id" !== person])
   );
+}); */
+app.delete("/api/persons/:id", (request, response) => {
+  Person.findByIdAndRemove(request.params.id)
+    .then((person) => response.status(204).end())
+    .catch((error) => {
+      response.status(404).send({ error: "unknown id" });
+    });
+});
+
+app.put("/api/persons/:id", (request, response) => {
+  const body = request.body;
+
+  const person = {
+    name: body.name,
+    number: body.number,
+  };
+
+  Person.findByIdAndUpdate(request.params.id, person, { new: true })
+    .then((updatedDetails) => {
+      response.json(formatNote(updatedDetails));
+    })
+    .catch((error) => {
+      console.log(error);
+      response.status(400).send({ error: "malformatted id" });
+    });
 });
 
 const error = (request, response) => {
