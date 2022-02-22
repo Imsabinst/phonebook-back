@@ -47,7 +47,7 @@ app.post("/api/persons", (request, response) => {
 
   person
     .save()
-    .then(form)
+    .then(formatDetails)
     .then((savedAndFormattedDetails) => {
       response.json(savedAndFormattedDetails);
     });
